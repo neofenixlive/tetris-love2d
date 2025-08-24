@@ -72,22 +72,24 @@ function rotate_piece(times)
         end
     end
     
-    --transposes 2d matrix
-    for y = 1, 4 do
-        for x = y + 1, 4 do
-            matrix[y][x], matrix[x][y] = matrix[x][y], matrix[y][x]
+    for i = 1, times do
+        --transposes 2d matrix
+        for y = 1, 4 do
+            for x = y + 1, 4 do
+                matrix[y][x], matrix[x][y] = matrix[x][y], matrix[y][x]
+            end
         end
-    end
-    
-    --flips 2d matrix
-    for y = 1, 4 do
-        local row = matrix[y]
-        local left, right = 1, 4
         
-        while left < right do
-            row[left], row[right] = row[right], row[left]
-            left = left + 1
-            right = right - 1
+        --flips 2d matrix
+        for y = 1, 4 do
+            local row = matrix[y]
+            local left, right = 1, 4
+            
+            while left < right do
+                row[left], row[right] = row[right], row[left]
+                left = left + 1
+                right = right - 1
+            end
         end
     end
     
@@ -232,7 +234,7 @@ function love.keyreleased(key)
 end
 
 function love.load()
-    --defines pieces
+    --defines pieces parameters
     pieces_list = {"L", "J", "S", "Z", "T", "I", "O"}
     pieces_points = {
         [1]=40,
