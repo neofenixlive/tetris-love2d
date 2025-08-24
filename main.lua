@@ -259,7 +259,7 @@ function love.load()
         O={0,0,0,0,0,7,7,0,0,7,7,0,0,0,0,0},
     }
     
-    --defines room matrix
+    --defines room matrix (1d)
     room = {}
     room_width = 8
     room_height = 16
@@ -267,7 +267,7 @@ function love.load()
         table.insert(room, 0)
     end
     
-    --defines falling piece matrix
+    --defines falling / controlling piece
     falling = {}
     falling_x = 0
     falling_y = 0
@@ -275,7 +275,7 @@ function love.load()
         table.insert(falling, 0)
     end
     
-    --defines game variables
+    --defines game parameters
     game = {
         current_score=0,
         high_score=0,
