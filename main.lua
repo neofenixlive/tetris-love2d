@@ -234,26 +234,6 @@ end
 
 --================
 
-function love.keypressed(key)
-    --game control
-    if key == "left" then
-        game.input_last = "left"
-    end
-    if key == "right" then
-        game.input_last = "right"
-    end
-    if key == "up" then
-        game.input_last = "rotate"
-    end
-    if key == "down" then
-        game.input_last = "drop"
-    end
-end
-
-function love.keyreleased(key)
-    game.input_rebounce = false
-end
-
 function love.load()
     --defines pieces parameters
     pieces_list = {"L", "J", "S", "Z", "T", "I", "O"}
@@ -336,6 +316,7 @@ function love.load()
         refresh_fall=1/2,
         next_piece=pieces.I,
         input_last="none",
+        input_rebounce=false
     }
     
     math.randomseed(os.time())
@@ -345,6 +326,19 @@ end
 
 function love.update(dt)
     --game loop
+        if love.keyboard.isDown("left") then
+            game.input_last = "left"
+        elseif love.keyboard.isDown("right") then
+            game.input_last = "right"
+        elseif love.keyboard.isDown("up") then
+            game.input_last = "rotate"
+        elseif love.keyboard.isDown("down") then
+            game.input_last = "drop"
+        else
+            game.input_last = "none"
+            game.input_rebounce = false
+        end
+
     game.update_move = game.update_move + dt
     if game.update_move>game.refresh_move then
         game.update_move = 0
@@ -352,16 +346,13 @@ function love.update(dt)
             if game.input_last == "left" then
                 move_piece(-1, 0)
                 game.input_rebounce = true
-            end
-            if game.input_last == "right" then
+            elseif game.input_last == "right" then
                 move_piece(1, 0)
                 game.input_rebounce = true
-            end
-            if game.input_last == "rotate" then
+            elseif game.input_last == "rotate" then
                 rotate_piece(1)
                 game.input_rebounce = true
-            end
-            if game.input_last == "drop" then
+            elseif game.input_last == "drop" then
                 move_piece(0, 1)
             end
         end
